@@ -1,6 +1,5 @@
 import React from 'react';
 
-// Declare the AddTodoForm function component
 function AddTodoForm() {
   return (
     <form className='formContainer'>
