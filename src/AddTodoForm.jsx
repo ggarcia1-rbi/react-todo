@@ -10,5 +10,4 @@ function AddTodoForm() {
   );
 }
 
-// Export the component as the default export
 export default AddTodoForm;
