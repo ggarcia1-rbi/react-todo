@@ -26,5 +26,8 @@ ul {
   list-style-position:inside;
 }
 li {
-  padding: 2px;
+  padding: 12px;
+}
+.removeButton{
+   margin-left: 20px;
 }
