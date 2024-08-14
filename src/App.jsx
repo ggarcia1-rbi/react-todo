@@ -34,23 +34,17 @@ function App() {
     setTodoList(updatedTodoList);
   };
 
-  if (isLoading) {
-    return (
+  return (
       <>
-        <h1>Todo List</h1>
+      <h1>Todo List</h1>
+      {isLoading ? (
         <p>Loading...</p>
-        <AddTodoForm onAddTodo={addTodo} />
-      </>
-    );
-  } else {
-    return (
-      <>
-        <h1>Todo List</h1>
+      ) : (
         <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
-        <AddTodoForm onAddTodo={addTodo} />
-      </>
-    );
-  }
+      )}
+      <AddTodoForm onAddTodo={addTodo} />
+    </>
+  );
 }
 
 export default App;
