@@ -66,7 +66,7 @@ function App() {
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
+        throw new error(`Error: ${response.status}`);
       }
 
       const newTodo = await response.json();
@@ -74,10 +74,6 @@ function App() {
     } catch (error) {
       console.error(error.message);
     }
-  };
-
-  const addTodo = (newTodo) => {
-    postTodo(newTodo);
   };
 
   const removeTodo = async (id) => {
@@ -92,7 +88,7 @@ function App() {
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
+        throw new error(`Error: ${response.status}`);
       }
 
       const updatedTodoList = todoList.filter((todo) => todo.id !== id);
@@ -101,12 +97,6 @@ function App() {
       console.error(error.message);
     }
   };
-
-  useEffect(() => {
-    if (!isLoading) {
-      localStorage.setItem('savedTodoList', JSON.stringify(todoList));
-    }
-  }, [todoList, isLoading]);
 
   return (
     <Router>
