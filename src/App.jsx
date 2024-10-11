@@ -8,9 +8,15 @@ function App() {
 
   const [todoList, setTodoList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDescending, setIsDescending] = useState(false);
 
   const fetchData = async () => {
-    const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`;
+    const sortDirection = isDescending ? 'desc' : 'asc';
+    //const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`;
+    //const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}?view=Grid%20view`;
+    //const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}?view=Grid%20view&sort[0][field]=title&sort[0][direction]=asc`;
+    const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}?sort[0][field]=title&sort[0][direction]=${sortDirection}`;
+
     const options = {
       method: 'GET',
       headers: {
@@ -21,7 +27,7 @@ function App() {
     try{
       const response = await fetch(url, options);
       if (!response.ok) {
-        throw new error(`Error: ${response.status}`);
+        throw new Error(`Error: ${response.status}`);
       }
 
       const data = await response.json();
@@ -32,7 +38,8 @@ function App() {
         createdAt: record.createdTime,
       }));
 
-      todos.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      //todos.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      
       
       setTodoList(todos);
       setIsLoading(false);
@@ -44,7 +51,7 @@ function App() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [isDescending]);
 
   const postTodo = async (todo) => {
     const airtableData = {
@@ -66,12 +73,20 @@ function App() {
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
-        throw new error(`Error: ${response.status}`);
+        throw new Error(`Error: ${response.status}`);
       }
 
       const newTodo = await response.json();
-      setTodoList([...todoList, { id: newTodo.id, title: newTodo.fields.title }]);
-    } catch (error) {
+      const updatedTodoList = [...todoList, { id: newTodo.id, title: newTodo.fields.title }];
+    
+      updatedTodoList.sort((a, b) => {
+        const comparison = a.title.localeCompare(b.title);
+        return isDescending ? -comparison : comparison;
+      });
+  
+      setTodoList(updatedTodoList);
+
+      } catch (error) {
       console.error(error.message);
     }
   };
@@ -88,7 +103,7 @@ function App() {
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
-        throw new error(`Error: ${response.status}`);
+        throw new Error(`Error: ${response.status}`);
       }
 
       const updatedTodoList = todoList.filter((todo) => todo.id !== id);
@@ -101,19 +116,39 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" 
-        element={
-          <>
-            <h1>Todo List</h1>
-            <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
-            <AddTodoForm onAddTodo={postTodo} />
-          </>
-        } />
-        <Route path="/new" 
-        element={<h1>New Todo List</h1>} />
+        <Route 
+          path="/" 
+          element={
+            <>
+              <h1>Todo List</h1>
+              <div className="toggle-container">
+                <label>Sort Descending</label>
+                <div className="toggle-switch">
+                  <input
+                    type="checkbox"
+                    checked={isDescending}
+                    onChange={() => setIsDescending(!isDescending)}
+                    className="toggle-checkbox"
+                    id="sortToggle"
+                  />
+                  <label className="toggle-label" htmlFor="sortToggle"></label>
+                </div>
+              </div>
+              {isLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <>
+                  <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
+                  <AddTodoForm onAddTodo={postTodo} />
+                </>
+              )}
+            </>
+          } 
+        />
+        <Route path="/new" element={<h1>New Todo List</h1>} />
       </Routes>
     </Router>
-);
+  );
 }
 
 export default App;
