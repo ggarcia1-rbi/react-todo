@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import InputWithLabel from './InputWithLabel';
+import PropTypes from 'prop-types';
 import styles from './InputField.module.css';
 
 function AddTodoForm({ onAddTodo }) {
@@ -12,7 +12,7 @@ function AddTodoForm({ onAddTodo }) {
 
   const handleAddTodo = (event) => {
     event.preventDefault();
-    onAddTodo({ title: todoTitle });
+    onAddTodo({ title: todoTitle, id: Date.now() });
     setTodoTitle("");
   }
   return (
@@ -33,6 +33,9 @@ function AddTodoForm({ onAddTodo }) {
   );
 }
 
+AddTodoForm.propTypes = {
+  onAddTodo: PropTypes.func.isRequired,
+};
 
 export default AddTodoForm;
 

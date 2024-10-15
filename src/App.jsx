@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
-import TodoList from './TodoList';
-import AddTodoForm from './AddTodoForm';
+import TodoList from './components/TodoList';
+import AddTodoForm from './components/AddTodoForm';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -106,7 +106,7 @@ function App() {
           <>
             <h1>Todo List</h1>
             <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
-            <AddTodoForm onAddTodo={addTodo} />
+            <AddTodoForm onAddTodo={postTodo} />
           </>
         } />
         <Route path="/new" 
