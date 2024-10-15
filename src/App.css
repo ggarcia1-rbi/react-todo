@@ -4,6 +4,10 @@ body {
   font-weight: 600;
   font-style: normal;
   line-height: 1.5;
+  overflow: hidden;
+}
+h1{
+  margin-top: 20px;
 }
 #root {
   max-width: 1280px;
@@ -31,7 +35,8 @@ li {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
+  margin-top: 12px;
 }
 .toggle-switch {
   position: relative;
@@ -52,7 +57,7 @@ li {
   border-radius: 24px;
   cursor: pointer;
   transition: background-color 0.3s;
-  border: 1px solid black; /* Black border around the toggle */
+  border: 1px solid black;
 }
 .toggle-label:before {
   position: absolute;
@@ -71,6 +76,32 @@ li {
 .toggle-checkbox:checked + .toggle-label:before {
   transform: translateX(26px);
 }
+.image-container {
+  margin-top: -30px;
+  display: flex;
+  justify-content: center;
+  
+}
+.todo-container {
+  display: flex;
+  flex-direction: column;
+  height: 95vh;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+.todo-list-container {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 4rem;
+  padding-right: 10px; 
+}
+.fixed-input-form {
+  position: sticky;
+  bottom: 60px;
+  border-top: 1px solid #ddd;
+  z-index: 10;
+}
+
 
 @media (max-width: 600px) {
   #root {
