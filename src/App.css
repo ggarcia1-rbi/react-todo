@@ -1,24 +1,17 @@
 body {
   background-color: lightblue;
+  font-family: "Roboto Mono", monospace;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1.5;
 }
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-}
-.formContainer{
-margin: 30px 0;
-display: flex;
-align-items: center;
-}
-.formContainer :is(label, input, button) {
-  margin: 10px 20px 0px -0px;
-  padding: 7px;
-  width: 100%;
-}
-.formContainer input {
-  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 ul {
   padding: 0;
@@ -27,7 +20,75 @@ ul {
 }
 li {
   padding: 12px;
+  overflow-wrap: break-word; 
+  word-wrap: break-word;
+  white-space: normal; 
 }
 .removeButton{
    margin-left: 20px;
+}
+
+@media (max-width: 600px) {
+  #root {
+    padding: 1rem;
+  }
+
+  .formContainer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .inputContainer,
+  .inputField {
+    width: 100%;
+  }
+
+  .todoList {
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .removeButton {
+    margin-top: 10px;
+    margin-left: 0px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  #root {
+    padding: 1.5rem;
+  }
+
+  .formContainer {
+    flex-direction: row;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .inputContainer {
+    width: 70%;
+  }
+}
+
+@media (min-width: 1025px) {
+  #root {
+    padding: 2rem;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  .inputContainer {
+    width: 60%;
+  }
+
+  .formContainer input {
+    width: 250px;
+  }
 }
