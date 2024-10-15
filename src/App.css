@@ -27,6 +27,50 @@ li {
 .removeButton{
    margin-left: 20px;
 }
+.toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+.toggle-switch {
+  position: relative;
+  width: 50px;
+  height: 24px;
+  margin-left: 10px;
+}
+.toggle-checkbox {
+  display: none; 
+}
+.toggle-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border: 1px solid black; /* Black border around the toggle */
+}
+.toggle-label:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 1px;
+  bottom: 1px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+.toggle-checkbox:checked + .toggle-label {
+  background-color: #e1440f;
+}
+.toggle-checkbox:checked + .toggle-label:before {
+  transform: translateX(26px);
+}
 
 @media (max-width: 600px) {
   #root {
