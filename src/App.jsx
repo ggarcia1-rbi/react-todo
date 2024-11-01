@@ -119,8 +119,11 @@ function App() {
         <Route 
           path="/" 
           element={
-            <>
+            <div className="todo-container">
               <h1>Todo List</h1>
+                <div className="image-container">
+                  <img className="ctd" src="https://cdn.filestackcontent.com/resize=width:600,height:315,fit:max/quality=value:90/Sn5Neh2cTqGMHSfWysgQ" alt="CTD" width="350" height="100" />
+                </div>
               <div className="toggle-container">
                 <label>Sort Descending</label>
                 <div className="toggle-switch">
@@ -134,15 +137,17 @@ function App() {
                   <label className="toggle-label" htmlFor="sortToggle"></label>
                 </div>
               </div>
-              {isLoading ? (
-                <p>Loading...</p>
-              ) : (
-                <>
+              <div className="todo-list-container">
+                {isLoading ? (
+                  <p>Loading...</p>
+                ) : (
                   <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
-                  <AddTodoForm onAddTodo={postTodo} />
-                </>
-              )}
-            </>
+                )}
+              </div>
+              <div className="fixed-input-form">
+                <AddTodoForm onAddTodo={postTodo} />
+              </div>
+            </div>
           } 
         />
         <Route path="/new" element={<h1>New Todo List</h1>} />
