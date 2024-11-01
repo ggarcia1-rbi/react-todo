@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import TodoList from './components/TodoList';
 import AddTodoForm from './components/AddTodoForm';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginForm from './components/LoginForm';
 
 function App() {
 
@@ -24,7 +25,7 @@ function App() {
       },
     };
 
-    try{
+    try {
       const response = await fetch(url, options);
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
@@ -39,12 +40,12 @@ function App() {
       }));
 
       //todos.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-      
-      
+
+
       setTodoList(todos);
       setIsLoading(false);
-      
-    }catch (error) {
+
+    } catch (error) {
       console.error(error.message);
     }
   };
@@ -78,15 +79,15 @@ function App() {
 
       const newTodo = await response.json();
       const updatedTodoList = [...todoList, { id: newTodo.id, title: newTodo.fields.title }];
-    
+
       updatedTodoList.sort((a, b) => {
         const comparison = a.title.localeCompare(b.title);
         return isDescending ? -comparison : comparison;
       });
-  
+
       setTodoList(updatedTodoList);
 
-      } catch (error) {
+    } catch (error) {
       console.error(error.message);
     }
   };
@@ -116,14 +117,14 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route 
-          path="/" 
+        <Route
+          path="/todo"
           element={
             <div className="todo-container">
               <h1>Todo List</h1>
-                <div className="image-container">
-                  <img className="ctd" src="https://cdn.filestackcontent.com/resize=width:600,height:315,fit:max/quality=value:90/Sn5Neh2cTqGMHSfWysgQ" alt="CTD" width="350" height="100" />
-                </div>
+              <div className="image-container">
+                <img className="ctd" src="https://cdn.filestackcontent.com/resize=width:600,height:315,fit:max/quality=value:90/Sn5Neh2cTqGMHSfWysgQ" alt="CTD" width="350" height="100" />
+              </div>
               <div className="toggle-container">
                 <label>Sort Descending</label>
                 <div className="toggle-switch">
@@ -148,9 +149,10 @@ function App() {
                 <AddTodoForm onAddTodo={postTodo} />
               </div>
             </div>
-          } 
+          }
         />
         <Route path="/new" element={<h1>New Todo List</h1>} />
+        <Route path="/" element={<LoginForm />} />
       </Routes>
     </Router>
   );
